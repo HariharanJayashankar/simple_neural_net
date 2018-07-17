@@ -37,10 +37,10 @@ def run(x, O, W_1, W_2, b_1, b_2, learning_rate):
 def train(x, O, W_1, W_2, b_1, b_2, n_iter, learning_rate):
     for i in range(n_iter):
         Y, upd = run(x, O, W_1, W_2, b_1, b_2, learning_rate)
-        W_1 = - upd[0]
-        W_2 = - upd[1]
-        b_1 = - upd[2]
-        b_2 = - upd[3]
+        W_1 -= upd[0]
+        W_2 -= upd[1]
+        b_1 -= upd[2]
+        b_2 -= upd[3]
         if i % 10 == 0:
             print(i)
             print((1 / np.size(O, 0)) * np.dot((Y - O).T, (Y - O)))
@@ -54,27 +54,19 @@ def predict(x, W_1, W_2, b_1, b_2):
     A_1 = sigmoid(Z_1)
     Z_2 = np.dot(W_2, A_1) + b_2
     Y = (sigmoid(Z_2)).T
-    return (Y > 0.5).astype(int)
+    return Y
 
 # Setting up our data
 
 
-inp = np.array([[0, 0, 1, 1],
-                [1, 1, 1, 1],
-                [1, 0, 1, 0],
-                [0, 1, 1, 1],
-                [1, 1, 0, 1]])
+inp = np.random.rand(100, 20)
 
-out = np.array([[0],
-                [1],
-                [1],
-                [0],
-                [1]])
+out = np.random.rand(100, 1)
 
 
 # Initializing parameters
 
-n_nodes = 2
+n_nodes = 10
 learning_rate = 0.5
 
 w_1 = np.random.rand(n_nodes, np.size(inp, 1))
@@ -89,7 +81,7 @@ updated_params = train(inp, out, w_1, w_2, b1, b2, 1000, learning_rate)
 # Testing
 prediction = predict(inp, *updated_params)
 
-print(prediction)
+print('Prediction: {0} \n Actual Output: {1} \n Error: {2}'.format(prediction.T, out.T, prediction.T - out.T))
 # Success! It gave us the same output. (its a code wise success, may not be the best neural net though)
 
 # You'll notice that the loss function doesn't go too low. Thats cause MSE isn't exactly the best loss function
