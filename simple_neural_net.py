@@ -83,6 +83,3 @@ prediction = predict(inp, *updated_params)
 
 print('Prediction: {0} \n Actual Output: {1} \n Error: {2}'.format(prediction.T, out.T, prediction.T - out.T))
 # Success! It gave us the same output. (its a code wise success, may not be the best neural net though)
-
-# You'll notice that the loss function doesn't go too low. Thats cause MSE isn't exactly the best loss function
-# for binary prediction problems (apparantly)
